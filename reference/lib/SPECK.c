@@ -122,8 +122,6 @@ size_t SPECK_sign(const speck_prikey_t *SK,
 
     /*         Ephemeral permutations generation        */
     unsigned char ephem_permutations_seed[SEED_LENGTH_BYTES];
-    // RAHMI: chiedi a Paolo se TRNG (in teoria sì, MSEED)
-    // Dove entra in gioco il messaggio?
     randombytes(ephem_permutations_seed, SEED_LENGTH_BYTES);
 
     unsigned char seed_tree[NUM_NODES_SEED_TREE * SEED_LENGTH_BYTES] = {0};
