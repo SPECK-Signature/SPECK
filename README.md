@@ -37,7 +37,7 @@ cmake ..
 make
 ```
 
-To perform benchmarking just run the binary with the desired parameter set, e.g., for $n=252$,$t=133$:
+To perform benchmarking just run the binary with the desired parameter set, e.g., for $n=252$, $t=133$:
 
 ```
 ./SPECK_benchmark_cat_252_133
