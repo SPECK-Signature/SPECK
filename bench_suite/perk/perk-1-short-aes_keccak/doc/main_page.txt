@@ -1,0 +1,64 @@
+/*! \mainpage PERK: a Digital Signature Scheme
+ *
+ *  1. SUBMISSION OVERVIEW
+ *  ----------------------
+ *
+ *
+ * Six parameters sets denoted respectively <b>perk-1-fast</b>, <b>perk-1-short</b>, <b>perk-3-fast</b>, <b>perk-3-short</b>, <b>perk-5-fast</b>, and <b>perk-5-short</b>
+ *
+ *  - <b>build/</b>: Files generated during compilation
+ *  - <b>doc/</b>: Technical documentation of the scheme
+ *  - <b>lib/</b>: Third party libraries used
+ *  - <b>src/</b>: Source code of the scheme
+ *  - <b>doxygen.conf</b>: Documentation configuration file
+ *  - <b>Makefile</b>: Makefile
+ *
+ *  <br />
+ *
+ *  2. INSTALLATION INSTRUCTIONS
+ *  ----------------------------
+ *
+ *  <h3>2.1 Requirements</h3>
+ *
+ *  The following software and libraries are required: <b>make</b>, <b>gcc</b> and <b>gmp</b> (version >= 6.2.1).  The target machine must support <b>AVX2</b> instructions.
+ *
+ *  <h3>2.2 Compilation Step</h3>
+ *
+ *  Let <b>X</b> denotes <b>-1-fast</b>, <b>-1-short</b>, <b>-3-fast</b>, <b>-3-short</b>, <b>-5-fast</b> or <b>-5-short</b> depending on the parameter set considered.
+ *  Let <b>Y</b> denotes <b>aes_aes</b>, <b>aes_keccak</b> or <b>keccak_keccak</b> depending on the symmetric mode considered.
+ *  <b>PERK</b> can be compiled in three different ways:
+ *  - cd perkX
+ *  - Execute <b>make perkX-Y</b> to compile a working example of the scheme. Run <b>ulimit -s 16000; ./build/bin/perkX-Y</b> to execute all the steps of the scheme and display theirs respective performances.
+ *  - Execute <b>make perkX-Y-kat</b> to compile the NIST KAT generator. Run <b>ulimit -s 16000; ./build/bin/perkX-Y-PQCgenKAT_sign</b> to generate KAT files.
+ *  - Execute <b>make perkX-Y-verbose</b> to compile a working example of the scheme in verbose mode. Run <b>ulimit -s 16000; ./build/bin/perkX-Y-verbose</b> to generate intermediate values.
+ *
+ * <br />
+ *
+ *  3. DOCUMENTATION
+ *  ----------------
+ *
+ *  <h3>3.1 Requirements</h3>
+ *
+ *  The following software are required: <b>doxygen</b>.
+ *
+ *  <h3>3.2 Generation Step</h3>
+ *
+ *  - Run <b>doxygen doxygen.conf</b> to generate the code documentation
+ *  - Browse <b>doc/html/index.html</b> to read the documentation
+ *
+ * <br />
+ *
+ *  4. IMPLEMENTATION OVERVIEW
+ *  --------------------------
+ * 
+ * The PERK signature scheme is defined in the <b>api.h<\b> and <b>parameters.h<\b> files and implemented in <b>sign.c<\b>.
+ * The internal API of the scheme is defined in <b>keygen.h<\b>, <b>signature.h<\b> and <b>verify.h<\b> (see also <b>keygen.c<\b>, <b>signature.c<\b> and <b>verify.c<b>).
+ * The data structures used in this implementation are defined in data_structures.h. The arithmetic operations including operations
+ * on polynomials, vectors and matrices are provided in directory <b>src/avx2<\b>. The <b>voles.c<\b> and voles.h files contains functions related
+ * the VOLE operations. PERK uses permutations, files <b>permutation.c<\b> and <b>permutation.h<\b> provide the implementation of functions related
+ * to the generation and operations over random permutations. The aforementioned functions uses the library djbsort to generate 
+ * permutations and to apply them. The djbsort library is provided in the folder <b>lib/djbsort<\b>. The files <b>symmetric.c<\b> and <b>symmetric.h<\b> provides
+ * functions related to symmetric crypto operations such as randomness generation, hashing and commitments generation. The XKCP library is provided in <b>lib/XKCP<\b> and
+ * is used to perform symmetric operations. As public key, secret key and signature can be manipulated either with their mathematical representations or as bit strings, the files
+ * <b>parsing.h<\b> and <b>parsing.c<\b> provide functions to switch between these two representations.
+ */

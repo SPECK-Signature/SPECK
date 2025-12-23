@@ -1,0 +1,9 @@
+This software is released into the public domain.
+
+You are free to use, modify, and distribute this software for any purpose, with or without fee, and without any warranty.
+
+This project incorporates third-party code from:
+- the XKCP project, which is itself based on public domain code: https://github.com/XKCP/XKCP/blob/master/LICENSE
+- sorting.cr.yp.to/djbsort-20190516 by Daniel J. Bernstein, released into the public domain: https://sorting.cr.yp.to/djbsort-20190516/LICENSE.html
+
+All of the included code is believed to be in the public domain.

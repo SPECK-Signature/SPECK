@@ -25,7 +25,7 @@ Furthermore, as specified above, the optimized implementation runs only modern I
 
 ## Benchmarking
 
-To run benchmarks the source code must first be compiled.
+To benchmark SPECK the source code must first be compiled.
 
 Compilation is performed as follows (for the optimized version just substitute `reference` with `optimized`):
 
@@ -42,3 +42,9 @@ To perform benchmarking just run the binary with the desired parameter set, e.g.
 ```
 ./SPECK_benchmark_cat_252_133
 ```
+
+The repository includes in the **[bench_suite](bench_suite/)** directory scripts for compiling and benchmarking LESS and PERK as well:
+
+- To **compile** LESS, SPECK and PERK just run `./compile.sh`.
+- To **perform benchmarks** run `python3 bench.py`.
+- To **delete binaries** run `./clean.sh`.

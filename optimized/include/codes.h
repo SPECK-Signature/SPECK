@@ -129,7 +129,7 @@ void row_mat_mult(FQ_ELEM *out,
                     uint8_t r,
                     uint8_t c){
 
-    vec256_t shuffle, t, c7f, c01, a, a_lo, a_hi, b, b_lo, b_hi;
+    vec256_t shuffle, t, c7f, c01, a, a_lo, a_hi, b;
     vec128_t tmp;
     vec256_t res;
     vset8(c7f, 127);
@@ -195,7 +195,7 @@ void row_mat_mult_opp_tran(FQ_ELEM *out,
                     uint8_t c,
                     uint8_t row_off){
 
-    vec256_t shuffle, t, c7f, c01, a, a_lo, a_hi, b, b_lo, b_hi;
+    vec256_t shuffle, t, c7f, c01, a, a_lo, a_hi, b;
     vec128_t tmp;
     vec256_t res;
     vset8(c7f, 127);

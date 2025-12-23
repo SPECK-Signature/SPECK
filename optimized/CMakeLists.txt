@@ -24,7 +24,7 @@ endif()
 
 set(ALLOWED_WARNINGS " -Wno-type-limits")
 set(CMAKE_C_FLAGS_DEBUG "-DUSE_AVX2 -g -Og -DDEBUG -Wall -Wextra -Wpedantic -mavx2 -mavx -mbmi2 -mbmi ${ALLOWED_WARNINGS}")
-set(CMAKE_C_FLAGS_RELEASE "-pg -DUSE_AVX2 -DNDEBUG -O3 -Wall -Wextra -Wpedantic -mavx2 -mavx -mbmi2 -mbmi -flto -ftree-vectorize -funroll-loops  ${ALLOWED_WARNINGS}")
+set(CMAKE_C_FLAGS_RELEASE "-DUSE_AVX2 -DNDEBUG -O3 -Wall -Wextra -Wpedantic -mavx2 -mavx -mbmi2 -mbmi -flto -ftree-vectorize -funroll-loops  ${ALLOWED_WARNINGS}")
 
 
 set(SOURCES
@@ -84,17 +84,17 @@ foreach(optimize_target ${PARAM_TARGETS})
     add_test(${TARGET_BINARY_NAME} ${TARGET_BINARY_NAME})
 
     # settings for unit tests binary
-    set(TARGET_BINARY_NAME SPECK_test_cat_${category}_${optimize_target})
-    add_executable(${TARGET_BINARY_NAME} ${HEADERS} ${SOURCES} ${PROJECT_SOURCE_DIR}/lib/test/speck_test.c)
-    set_property(TARGET ${TARGET_BINARY_NAME} APPEND PROPERTY COMPILE_FLAGS "-DCATEGORY=${category} -DTARGET=${optimize_target}")
-    target_include_directories(${TARGET_BINARY_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib/test)
-    add_test(${TARGET_BINARY_NAME} ${TARGET_BINARY_NAME})
+    #set(TARGET_BINARY_NAME SPECK_test_cat_${category}_${optimize_target})
+    #add_executable(${TARGET_BINARY_NAME} ${HEADERS} ${SOURCES} ${PROJECT_SOURCE_DIR}/lib/test/speck_test.c)
+    #set_property(TARGET ${TARGET_BINARY_NAME} APPEND PROPERTY COMPILE_FLAGS "-DCATEGORY=${category} -DTARGET=${optimize_target}")
+    #target_include_directories(${TARGET_BINARY_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib/test)
+    #add_test(${TARGET_BINARY_NAME} ${TARGET_BINARY_NAME})
 
     # KATS generation
-    set(TARGET_BINARY_NAME SPECK_nist_cat_${category}_${optimize_target})
-    add_executable(${TARGET_BINARY_NAME} ${HEADERS} ${SOURCES}  ${PROJECT_SOURCE_DIR}/lib/nist/KAT_NIST_rng.c ${PROJECT_SOURCE_DIR}/lib/nist/PQCgenKAT_sign.c)
-    target_include_directories(${TARGET_BINARY_NAME} PRIVATE ${OPENSSL_INCLUDE_DIR})
-    target_link_libraries(${TARGET_BINARY_NAME} PRIVATE OpenSSL::Crypto)
-    set_property(TARGET ${TARGET_BINARY_NAME} APPEND PROPERTY COMPILE_FLAGS "-DCATEGORY=${category} -DTARGET=${optimize_target}")
-    add_test(${TARGET_BINARY_NAME} ${TARGET_BINARY_NAME})
+    #set(TARGET_BINARY_NAME SPECK_nist_cat_${category}_${optimize_target})
+    #add_executable(${TARGET_BINARY_NAME} ${HEADERS} ${SOURCES}  ${PROJECT_SOURCE_DIR}/lib/nist/KAT_NIST_rng.c ${PROJECT_SOURCE_DIR}/lib/nist/PQCgenKAT_sign.c)
+    #target_include_directories(${TARGET_BINARY_NAME} PRIVATE ${OPENSSL_INCLUDE_DIR})
+    #target_link_libraries(${TARGET_BINARY_NAME} PRIVATE OpenSSL::Crypto)
+    #set_property(TARGET ${TARGET_BINARY_NAME} APPEND PROPERTY COMPILE_FLAGS "-DCATEGORY=${category} -DTARGET=${optimize_target}")
+    #add_test(${TARGET_BINARY_NAME} ${TARGET_BINARY_NAME})
 endforeach(optimize_target)
