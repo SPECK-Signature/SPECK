@@ -10,6 +10,7 @@ The repo is organized as follows:
     - **[arrangements.sage](scripts/arrangements.sage)** is a collection of methods to count vectors, useful for the analysis of the attack complexity;
     - **[get_seedtree_vals.py](scripts/get_seedtree_vals.py)** is the file used to select parameters for the seedtree, took from the [CROSS repository](https://github.com/CROSS-signature/CROSS-implementation);
     - **[solver_evaluation.ipynb](scripts/solver_evaluation.ipynb)** is a jupyter notebook showing the theorical cost for the solver presented in the paper.
+- **[bench_suite](bench_suite/)** contains scripts for compiling, benchmarking and cleaning SPECK, LESS and PERK signature scheme (see Benchmarks section).
 
 ## Requirements
 
