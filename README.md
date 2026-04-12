@@ -6,6 +6,7 @@ The repo is organized as follows:
 
 - **[reference](reference/)** contains the source code for the reference implementation, compileable on multiple architectures.
 - **[optimized](optimized/)** contains the source code for the optimized implementation, which leverages the **AVX2 instruction set**, available only on modern Intel CPUs, starting from the Haswell generation.
+- **[multikey](multikey/)** contains the source code for the optimized multikey implementation, which leverages the **AVX2 instruction set**, available only on modern Intel CPUs, starting from the Haswell generation.
 - **[scripts](scripts/)** contains utility files, in particular:
     - **[arrangements.sage](scripts/arrangements.sage)** is a collection of methods to count vectors, useful for the analysis of the attack complexity;
     - **[get_seedtree_vals.py](scripts/get_seedtree_vals.py)** is the file used to select parameters for the seedtree, took from the [CROSS repository](https://github.com/CROSS-signature/CROSS-implementation);
