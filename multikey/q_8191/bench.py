@@ -1,0 +1,83 @@
+import subprocess
+import time
+import argparse
+import os
+import sys
+
+import matplotlib.pyplot as plt
+
+import itertools
+
+def get_script_path():
+    return os.path.dirname(os.path.realpath(sys.argv[0]))
+
+# Check turboboost disabled
+
+def check_turbo_boost():
+    check_cmd = "cat $(find /sys/devices/system/cpu/ -iname '*no_turbo' | head -n 1)"
+    turbo_boost_disabled = subprocess.run(check_cmd, shell=True, capture_output=True).stdout.decode()
+    if turbo_boost_disabled == '0\n':
+        print("Turbo boost is not disabled! This will affect benchmarking results.")
+        file_cmd = "find /sys/devices/system/cpu/ -iname '*no_turbo' | head -n 1"
+        turbo_boost_file = subprocess.run(file_cmd, shell=True, capture_output=True).stdout.decode()
+        disable_tb_cmd = f"echo 1 | sudo tee {turbo_boost_file}"
+        print(f"To disable it run {disable_tb_cmd}")
+        time.sleep(0.5)
+
+def check_scaling_governor():
+    check_cmd = "cat $(find /sys/devices/system/cpu -iname '*scaling_governor') | grep powersave | wc -l"
+    powersave_cpus = int(subprocess.run(check_cmd, shell=True, capture_output=True).stdout.decode())
+    if powersave_cpus > 0:
+        print("CPU is set to powersave mode! This will affected benchmarking results.")
+        print("Set it to performance mode using a system utility, e.g. `sudo cpupower frequency-set -g performance`")
+        time.sleep(0.5)
+
+benchmarks = {}
+# benchmark['<scheme-name>'] = [kg-cycles,kg-time,sign-cycles,sign-times,ver-cycles,ver-times,sign-size]
+
+
+def run_benchs(name,pairs):
+    print(f"=========================={name.upper()}==========================")
+    print("")
+    script_dir = get_script_path()
+    bench_struct = []
+    for pair in pairs:
+        if not os.path.exists(pair[1]):
+            print(f"Binary not found, have you compiled {pair[0].split('_')[0].upper()}? Run compile.sh")
+            break
+        cmd = f"{script_dir+pair[1][1:]} 2>/dev/null | grep -oP '[0-9]*\\.?[0-9]*'"
+        result = subprocess.run(cmd, shell=True, capture_output=True).stdout.decode()
+        values = [float(val) for val in result.split() if val]
+        # values = [KCycles AVG, KCycles STDDEV, milliseconds AVG]
+        #print(values)
+        print(f"-------------------{pair[0]}-------------------")
+        print(f"KEYGEN: {values[0]:>10.2f} KCycles {values[2]:>10.2f} ms")
+        print(f"SIGN:   {values[3]:>10.2f} KCycles {values[5]:>10.2f} ms")
+        print(f"VERIFY: {values[6]:>10.2f} KCycles {values[8]:>10.2f} ms")
+        #print(f"SIZE:   {values[6]:>20} Bytes ")
+        #benchmarks[pair[0]] = [values[0],values[2], values[3], values[5], values[7], values[9], values[6]]
+        #bench_struct.append([pair[0],[values[0],values[2], values[3], values[5], values[7], values[9], values[6]]])
+        time.sleep(0.01)
+        print("")
+    #benchmarks[name] = bench_struct
+    print("")
+
+speck_2_pairs = [
+    ['speck_248_2',     './build/SPECK_benchmark_cat_248_2'],
+    ['speck_248_4',     './build/SPECK_benchmark_cat_248_4'],
+    ['speck_248_8',     './build/SPECK_benchmark_cat_248_8'],
+    ['speck_248_16',    './build/SPECK_benchmark_cat_248_16'],
+    ['speck_248_32',    './build/SPECK_benchmark_cat_248_32'],
+    ['speck_400_2',     './build/SPECK_benchmark_cat_400_2'],
+    ['speck_400_4',     './build/SPECK_benchmark_cat_400_4'],
+    ['speck_400_8',     './build/SPECK_benchmark_cat_400_8'],
+    ['speck_400_16',    './build/SPECK_benchmark_cat_400_16'],
+    ['speck_400_32',    './build/SPECK_benchmark_cat_400_32']
+]
+
+
+if __name__ == "__main__":
+    print(f"Benchmarking Times (average of 128 runs)")
+    #check_turbo_boost()
+    #check_scaling_governor()
+    run_benchs('speck_2',speck_2_pairs)
